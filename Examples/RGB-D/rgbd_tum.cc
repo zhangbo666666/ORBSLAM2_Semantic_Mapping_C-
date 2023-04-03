@@ -99,7 +99,7 @@ int main(int argc, char **argv)
         #ifdef COMPILEDWITHC11 //时间点，steady_clock最短时间间隔0.1us
                 std::chrono::steady_clock::time_point t1 = std::chrono::steady_clock::now();  
         #else
-                std::chrono::monotonic_clock::time_point t1 = std::chrono::monotonic_clock::now();
+                std::chrono::steady_clock::time_point t1 = std::chrono::steady_clock::now();
         #endif
 
                 // Pass the image to the SLAM system,，传入图像进行追踪
@@ -110,7 +110,7 @@ int main(int argc, char **argv)
         #ifdef COMPILEDWITHC11
                 std::chrono::steady_clock::time_point t2 = std::chrono::steady_clock::now();
         #else
-                std::chrono::monotonic_clock::time_point t2 = std::chrono::monotonic_clock::now();
+                std::chrono::steady_clock::time_point t2 = std::chrono::steady_clock::now();
         #endif
         //duration还有一个成员函数count()返回Rep类型的Period数量（如0.01s，0.01->Rep，s->period)
         //Rep表示一种数值类型，用来表示Period的数量，比如int float double 

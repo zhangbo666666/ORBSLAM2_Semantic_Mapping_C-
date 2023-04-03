@@ -10,7 +10,7 @@ IF(NOT ROS_BUILD_TYPE)
 ENDIF()
 
 MESSAGE("Build type: " ${ROS_BUILD_TYPE})
-
+add_definitions(-w)
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS}  -Wall  -O3 -march=native ")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall  -O3 -march=native")
 
@@ -18,12 +18,12 @@ SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR})  # 设置可执行文件输出
 
 # Check C++11 or C++0x support
 include(CheckCXXCompilerFlag)
-CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_SUPPORTS_CXX11)
+CHECK_CXX_COMPILER_FLAG("-std=c++14" COMPILER_SUPPORTS_CXX14)
 CHECK_CXX_COMPILER_FLAG("-std=c++0x" COMPILER_SUPPORTS_CXX0X)
-if(COMPILER_SUPPORTS_CXX11)
-   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+if(COMPILER_SUPPORTS_CXX14)
+   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14")
    add_definitions(-DCOMPILEDWITHC11)
-   message(STATUS "Using flag -std=c++11.")
+   message(STATUS "Using flag -std=c++14.")
 elseif(COMPILER_SUPPORTS_CXX0X)
    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
    add_definitions(-DCOMPILEDWITHC0X)
@@ -45,7 +45,7 @@ find_package(catkin REQUIRED COMPONENTS
 
 # set(OpenCV_DIR "/usr/share/OpenCV") # opencv3.2.0 (ROS自带的opencv路径)
 # set(OpenCV_DIR "/home/xshen/other/share/OpenCV") # opencv3.4.7
-find_package(OpenCV 3.0 QUIET)
+find_package(OpenCV 3.4.5 QUIET)
 find_package(OpenCV REQUIRED)
 if(NOT OpenCV_FOUND)
    find_package(OpenCV 2.4.3 QUIET)
@@ -54,7 +54,7 @@ if(NOT OpenCV_FOUND)
    endif()
 endif()
 
-find_package(Eigen3 3.1.0 REQUIRED)
+find_package(Eigen3 3.1.0 REQUIRED NO_MODULE)
 find_package(Pangolin REQUIRED)
 FIND_PACKAGE(PCL 1.8 REQUIRED)
 
@@ -66,7 +66,7 @@ ${Pangolin_INCLUDE_DIRS}
 
 ${PCL_INCLUDE_DIRS}
 ${catkin_INCLUDE_DIRS}
-"/home/xshen/Anaconda3/envs/deeplab-pytorch/include/python3.6m"
+"/home/zb/anaconda3/envs/deeplab-pytorch/include/python3.6m"
 )
 
 add_definitions( ${PCL_DEFINITIONS} )
@@ -84,8 +84,8 @@ ${PROJECT_SOURCE_DIR}/../../../lib/libORB_SLAM2.so
 
 ${PCL_LIBRARIES}
 ${catkin_LIBRARIES} 
-"/home/xshen/Anaconda3/envs/deeplab-pytorch/lib/python3.6"
-"/home/xshen/Anaconda3/envs/deeplab-pytorch/lib/libpython3.6m.so"
+"/home/zb/anaconda3/envs/deeplab-pytorch/lib/python3.6"
+"/home/zb/anaconda3/envs/deeplab-pytorch/lib/libpython3.6m.so"
 )
 
 # Node for monocular camera
@@ -93,41 +93,41 @@ ${catkin_LIBRARIES}
 # src/ros_mono.cc
 # )
 
-add_executable(Mono 
-src/ros_mono.cc)
+# add_executable(Mono 
+# src/ros_mono.cc)
 
-target_link_libraries(Mono
-${LIBS}
-)
+# target_link_libraries(Mono
+# ${LIBS}
+# )
 
-# Node for monocular camera (Augmented Reality Demo)
-# rosbuild_add_executable(MonoAR
+# # Node for monocular camera (Augmented Reality Demo)
+# # rosbuild_add_executable(MonoAR
+# # src/AR/ros_mono_ar.cc
+# # src/AR/ViewerAR.h
+# # src/AR/ViewerAR.cc
+# # )
+# add_executable(MonoAR 
 # src/AR/ros_mono_ar.cc
 # src/AR/ViewerAR.h
 # src/AR/ViewerAR.cc
 # )
-add_executable(MonoAR 
-src/AR/ros_mono_ar.cc
-src/AR/ViewerAR.h
-src/AR/ViewerAR.cc
-)
 
-target_link_libraries(MonoAR
-${LIBS}
-)
+# target_link_libraries(MonoAR
+# ${LIBS}
+# )
 
-# Node for stereo camera
-# rosbuild_add_executable(Stereo
+# # Node for stereo camera
+# # rosbuild_add_executable(Stereo
+# # src/ros_stereo.cc
+# # )
+
+# add_executable(Stereo
 # src/ros_stereo.cc
 # )
 
-add_executable(Stereo
-src/ros_stereo.cc
-)
-
-target_link_libraries(Stereo
-${LIBS}
-)
+# target_link_libraries(Stereo
+# ${LIBS}
+# )
 
 # Node for RGB-D camera
 # rosbuild_add_executable(RGBD

@@ -1,0 +1,40 @@
+Configuring and building Thirdparty/DBoW2 ...
+mkdir: 无法创建目录"build": 文件已存在
+CMake Deprecation Warning at CMakeLists.txt:1 (cmake_minimum_required):
+  Compatibility with CMake < 2.8.12 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value or use a ...<max> suffix to tell
+  CMake that the project does not need compatibility with older versions.
+
+
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/zb/catkin_ws/ORBSLAM2_Semantic_Mapping/Thirdparty/DBoW2/build
+Could not read from progress file.
+Built target DBoW2
+Configuring and building Thirdparty/g2o ...
+mkdir: 无法创建目录"build": 文件已存在
+CMake Deprecation Warning at CMakeLists.txt:1 (CMAKE_MINIMUM_REQUIRED):
+  Compatibility with CMake < 2.8.12 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value or use a ...<max> suffix to tell
+  CMake that the project does not need compatibility with older versions.
+
+
+-- BUILD TYPE:Release
+-- Compiling on Unix
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/zb/catkin_ws/ORBSLAM2_Semantic_Mapping/Thirdparty/g2o/build
+CMake Error at build/CMakeFiles/g2o.dir/DependInfo.cmake:41:
+  Parse error.  Function missing ending ")".  Instead found unterminated
+  string with text "/home/zb/catkin_ws/ORBSL".
+
+
+CMake Error: Target DependInfo.cmake file not found
+Scanning dependencies of target g2o
+CMake Error: Directory Information file not found
+[100%] Built target g2o
+Uncompress vocabulary ...

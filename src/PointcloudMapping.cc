@@ -321,7 +321,7 @@ void PointCloudMapping::getProbMap(PyObject* pModule, PyObject* pArg, cv::Mat& i
 void PointCloudMapping::runSegmantation() 
 {
     
-    Py_SetPythonHome(mPythonHome);  // ??ImportError: No module named site
+    Py_SetPythonHome((char*)mPythonHome.data());  // ??ImportError: No module named site
     Py_Initialize(); // 对python进行初始化，无返回值。使用py_IsInitialized检查系统是否初始化成功。
 
     // anaconda下deeplab-pytorch环境（Py_SetPythonHome的替换方案）

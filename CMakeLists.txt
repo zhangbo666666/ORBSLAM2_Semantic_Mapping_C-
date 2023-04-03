@@ -12,18 +12,21 @@ IF(NOT CMAKE_BUILD_TYPE)
 ENDIF()
 
 MESSAGE("Build type: " ${CMAKE_BUILD_TYPE})
+add_definitions(-w)
 
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS}  -Wall  -O3 -march=native ")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall   -O3 -march=native")
+set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -march=native")
+set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -march=native")
 
 # Check C++11 or C++0x support
 include(CheckCXXCompilerFlag)
-CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_SUPPORTS_CXX11)
+CHECK_CXX_COMPILER_FLAG("-std=c++14" COMPILER_SUPPORTS_CXX14)
 CHECK_CXX_COMPILER_FLAG("-std=c++0x" COMPILER_SUPPORTS_CXX0X)
-if(COMPILER_SUPPORTS_CXX11)
-   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -pthread")
-   add_definitions(-DCOMPILEDWITHC11)
-   message(STATUS "Using flag -std=c++11.")
+if(COMPILER_SUPPORTS_CXX14)
+   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 -pthread")
+   add_definitions(-DCOMPILEDWITHC14)
+   message(STATUS "Using flag -std=c++14.")
 elseif(COMPILER_SUPPORTS_CXX0X)
    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
    add_definitions(-DCOMPILEDWITHC0X)
@@ -34,7 +37,7 @@ endif()
 
 LIST(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake_modules)
 
-find_package(OpenCV 3.0 QUIET)
+find_package(OpenCV 3.4.5 REQUIRED)
 if(NOT OpenCV_FOUND)
    find_package(OpenCV 2.4.3 QUIET)
    if(NOT OpenCV_FOUND)
@@ -42,7 +45,7 @@ if(NOT OpenCV_FOUND)
    endif()
 endif()
 
-find_package(Eigen3 3.1.0 REQUIRED)
+find_package(Eigen3 3.1.0 REQUIRED NO_MODULE)
 find_package(Pangolin REQUIRED)
 
 FIND_PACKAGE(PCL 1.8 REQUIRED)
@@ -53,7 +56,7 @@ ${PROJECT_SOURCE_DIR}/include
 ${EIGEN3_INCLUDE_DIR}
 ${Pangolin_INCLUDE_DIRS}
 ${PCL_INCLUDE_DIRS}
-"/home/xshen/Anaconda3/envs/deeplab-pytorch/include/python3.6m"
+"/home/zb/anaconda3/envs/deeplab-pytorch/include/python3.6m"
 )
 
 add_definitions( ${PCL_DEFINITIONS} )
@@ -94,8 +97,8 @@ ${PROJECT_SOURCE_DIR}/Thirdparty/DBoW2/lib/libDBoW2.so
 ${PROJECT_SOURCE_DIR}/Thirdparty/g2o/lib/libg2o.so
 
 ${PCL_LIBRARIES}
-"/home/xshen/Anaconda3/envs/deeplab-pytorch/lib/python3.6"
-"/home/xshen/Anaconda3/envs/deeplab-pytorch/lib/libpython3.6m.so"
+"/home/zb/anaconda3/envs/deeplab-pytorch/lib/python3.6"
+"/home/zb/anaconda3/envs/deeplab-pytorch/lib/libpython3.6m.so"
 )
 
 # Build examples
@@ -111,28 +114,28 @@ target_link_libraries(rgbd_tum
 ${PROJECT_NAME}
 )
 
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/Examples/Stereo)
+# set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/Examples/Stereo)
 
-add_executable(stereo_kitti
-Examples/Stereo/stereo_kitti.cc)
-target_link_libraries(stereo_kitti ${PROJECT_NAME})
+# add_executable(stereo_kitti
+# Examples/Stereo/stereo_kitti.cc)
+# target_link_libraries(stereo_kitti ${PROJECT_NAME})
 
-add_executable(stereo_euroc
-Examples/Stereo/stereo_euroc.cc)
-target_link_libraries(stereo_euroc ${PROJECT_NAME})
+# add_executable(stereo_euroc
+# Examples/Stereo/stereo_euroc.cc)
+# target_link_libraries(stereo_euroc ${PROJECT_NAME})
 
 
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/Examples/Monocular)
+# set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/Examples/Monocular)
 
-add_executable(mono_tum
-Examples/Monocular/mono_tum.cc)
-target_link_libraries(mono_tum ${PROJECT_NAME})
+# add_executable(mono_tum
+# Examples/Monocular/mono_tum.cc)
+# target_link_libraries(mono_tum ${PROJECT_NAME})
 
-add_executable(mono_kitti
-Examples/Monocular/mono_kitti.cc)
-target_link_libraries(mono_kitti ${PROJECT_NAME})
+# add_executable(mono_kitti
+# Examples/Monocular/mono_kitti.cc)
+# target_link_libraries(mono_kitti ${PROJECT_NAME})
 
-add_executable(mono_euroc
-Examples/Monocular/mono_euroc.cc)
-target_link_libraries(mono_euroc ${PROJECT_NAME})
+# add_executable(mono_euroc
+# Examples/Monocular/mono_euroc.cc)
+# target_link_libraries(mono_euroc ${PROJECT_NAME})
 
